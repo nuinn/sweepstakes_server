@@ -5,7 +5,7 @@ import './dB.js';
 import apiRouter from './src/api/router.js';
 
 const server = express();
-const { PORT } = process.env;
+const { PORT, API_TOKEN } = process.env;
 // const PORT = 3000;
 
 // server.use((req, res, next) => {
@@ -27,7 +27,7 @@ server.use('/api', (req, res) => {
   const url = `https://api.football-data.org${req.url}`;
   req.pipe(request(url, {
     headers: {
-      'X-Auth-Token': 'e6b91cce9d4b4a04bca3f90ba325de5d',
+      'X-Auth-Token': API_TOKEN,
     },
   })).pipe(res);
 });
