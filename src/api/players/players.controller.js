@@ -11,7 +11,14 @@ async function getByLeague(req, res) {
   res.json(players);
 }
 
+async function add(req, res) {
+  const { name, league } = req.body;
+  const addedPlayer = await playersService.add({ name, league });
+  res.json(addedPlayer);
+}
+
 export {
   getAll,
   getByLeague,
+  add,
 };

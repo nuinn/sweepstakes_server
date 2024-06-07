@@ -10,7 +10,13 @@ async function getByLeague({ league }) {
   return players;
 }
 
+async function add({ name, league }) {
+  const addedPlayer = await PlayerModel.create({ name, league });
+  return addedPlayer;
+}
+
 export {
   getAll,
   getByLeague,
+  add,
 };
