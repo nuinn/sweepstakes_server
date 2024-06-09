@@ -15,8 +15,18 @@ async function edit({ name, body }) {
   return editedTeam;
 }
 
+async function populateTeams({ teams, wildcard }) {
+  if (wildcard) {
+    const wildcardData = await teamsRepository.populateTeams({ wildcard });
+    return wildcardData;
+  }
+  const teamsData = await teamsRepository.populateTeams({ teams });
+  return teamsData;
+}
+
 export {
   getAll,
   add,
   edit,
+  populateTeams,
 };

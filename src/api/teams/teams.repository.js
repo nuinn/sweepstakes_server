@@ -19,8 +19,18 @@ async function edit({ name, body }) {
   return editedTeam;
 }
 
+async function populateTeams({ teams, wildcard }) {
+  if (wildcard) {
+    const wildcardData = await TeamModel.find({ apiId: wildcard }).lean();
+    return wildcardData;
+  }
+  const teamsData = await TeamModel.find({ apiId: { $in: teams } }).lean();
+  return teamsData;
+}
+
 export {
   getAll,
   add,
   edit,
+  populateTeams,
 };

@@ -13,7 +13,7 @@ async function create({ newLeague }) {
 async function edit({ _id, body }) {
   const editedLeague = await LeagueModel.findByIdAndUpdate(_id, body, {
     new: true,
-  });
+  }).lean();
   return editedLeague;
 }
 

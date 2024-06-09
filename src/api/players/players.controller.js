@@ -22,7 +22,14 @@ async function addTeam(req, res) {
   const { _id } = req.params;
   const { team, wildcard } = req.body;
   const updatedPlayer = await playersService.addTeam({ _id, team, wildcard });
-  const teams = await teamsService
+  if (updatedPlayer.wildcard) {
+    const wildcardData = await teamsService.populateTeams({
+      wildcard: updatedPlayer.wildcard,
+    });
+    updatedPlayer.wildcardData = wildcardData;
+  }
+  const teamsData = await teamsService.populateTeams({ teams: updatedPlayer.teams });
+  updatedPlayer.teamsData = teamsData;
   res.json(updatedPlayer);
 }
 
