@@ -11,7 +11,15 @@ async function add(req, res) {
   res.json(addedTeam);
 }
 
+async function edit(req, res) {
+  const { name } = req.params;
+  const { body } = req;
+  const editedTeam = await teamsService.edit({ name, body });
+  res.json(editedTeam);
+}
+
 export {
   getAll,
   add,
+  edit,
 };

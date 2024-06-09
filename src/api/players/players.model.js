@@ -21,6 +21,9 @@ const playersSchema = new Schema({
   teams: {
     type: [String],
   },
+  wildcard: {
+    type: String,
+  },
 });
 
 const PlayerModel = model('Player', playersSchema);

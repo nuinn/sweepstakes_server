@@ -10,7 +10,13 @@ async function create({ newLeague }) {
   return addedLeague;
 }
 
+async function edit({ _id, body }) {
+  const editedLeague = await leaguesRepository.edit({ _id, body });
+  return editedLeague;
+}
+
 export {
   getByName,
   create,
+  edit,
 };

@@ -10,7 +10,15 @@ async function create({ newLeague }) {
   return addedLeague;
 }
 
+async function edit({ _id, body }) {
+  const editedLeague = await LeagueModel.findByIdAndUpdate(_id, body, {
+    new: true,
+  });
+  return editedLeague;
+}
+
 export {
   getByName,
   create,
+  edit,
 };

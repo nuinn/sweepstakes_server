@@ -15,8 +15,24 @@ async function add({ name, league }) {
   return addedPlayer;
 }
 
+async function addTeam({ _id, team, wildcard }) {
+  if (team) {
+    const updatedPlayer = await playersRepository.addTeam({ _id, team });
+    return updatedPlayer;
+  }
+  const updatedPlayer = await playersRepository.addWildcard({ _id, wildcard });
+  return updatedPlayer;
+}
+
+async function remove({ _id }) {
+  const removedPlayer = await playersRepository.remove({ _id });
+  return removedPlayer;
+}
+
 export {
   getAll,
   getByLeague,
   add,
+  addTeam,
+  remove,
 };

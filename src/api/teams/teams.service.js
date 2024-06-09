@@ -10,7 +10,13 @@ async function add({ newTeam }) {
   return addedTeam;
 }
 
+async function edit({ name, body }) {
+  const editedTeam = await teamsRepository.edit({ name, body });
+  return editedTeam;
+}
+
 export {
   getAll,
   add,
+  edit,
 };

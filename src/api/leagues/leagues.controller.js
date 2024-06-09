@@ -5,7 +5,7 @@ async function getByName(req, res) {
   const { name } = req.params;
   const league = await leaguesService.getByName({ name: name.toLowerCase() });
   if (!league) {
-    res.status(400).json({ msg: 'league does not exist' });
+    res.status(400).json({ msg: `${name} league does not exist` });
     return;
   }
   const players = await playersService.getByLeague({ league: league._id });
@@ -19,7 +19,17 @@ async function create(req, res) {
   res.json(addedLeague);
 }
 
+async function edit(req, res) {
+  const { _id } = req.params;
+  const { body } = req;
+  const editedLeague = await leaguesService.edit({ _id, body });
+  const players = await playersService.getByLeague({ league: _id });
+  editedLeague.players = players;
+  res.json(editedLeague);
+}
+
 export {
   getByName,
   create,
+  edit,
 };

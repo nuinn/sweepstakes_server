@@ -5,5 +5,6 @@ const router = Router();
 
 router.get('/', teamsController.getAll);
 router.post('/', teamsController.add);
+router.patch('/:name', teamsController.edit);
 
 export default router;

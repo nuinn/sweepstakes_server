@@ -9,6 +9,10 @@ const leaguesSchema = new Schema({
     type: Boolean,
     default: true,
   },
+  live: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const LeagueModel = model('League', leaguesSchema);
