@@ -27,7 +27,12 @@ async function getAll(req, res) {
 async function getByLeague(req, res) {
   const { league } = req.params;
   const players = await playersService.getByLeague({ league });
-  res.json(players);
+  const playersWithTeamsPromises = players.map(async (player) => {
+    const playerWithTeams = await addTeams({ player });
+    return playerWithTeams;
+  });
+  const playersWithTeams = await Promise.all(playersWithTeamsPromises);
+  await res.json(playersWithTeams);
 }
 
 async function add(req, res) {
