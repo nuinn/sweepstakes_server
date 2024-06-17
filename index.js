@@ -19,22 +19,12 @@ const { PORT, API_TOKEN } = process.env;
 //   }
 // });
 
-// server.use(express.json());
-// server.use(cors({ origin: true }));
-// server.use(apiRouter);
-
-// server.use('/api', (req, res) => {
-//   const url = `https://api.football-data.org${req.url}`;
-//   req.pipe(request(url, {
-//     headers: {
-//       'X-Auth-Token': API_TOKEN,
-//     },
-//   })).pipe(res);
-// });
+server.use(express.json());
+server.use(cors({ origin: true }));
+server.use(apiRouter);
 
 server.use('/api', (req, res) => {
-  const apiUrl = req.url.replace('/api', '');
-  const url = `https://api.football-data.org${apiUrl}`;
+  const url = `https://api.football-data.org${req.url}`;
   req.pipe(request(url, {
     headers: {
       'X-Auth-Token': API_TOKEN,
