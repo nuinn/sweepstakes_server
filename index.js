@@ -20,7 +20,11 @@ const { PORT, API_TOKEN } = process.env;
 // });
 
 server.use(express.json());
-server.use(cors({ origin: true }));
+// server.use(cors({ origin: true }));
+server.use(cors({
+  origin: 'https://eurosweepstakes.vercel.app', // Allow your Vercel frontend
+  credentials: true,
+}));
 server.use(apiRouter);
 
 server.use('/api', (req, res) => {
