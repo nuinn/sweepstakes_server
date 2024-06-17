@@ -24,6 +24,7 @@ server.use(cors({ origin: true }));
 server.use(apiRouter);
 
 server.use('/api', (req, res) => {
+  console.log(`PORT: ${PORT}, API_TOKEN: ${API_TOKEN}`);
   const url = `https://api.football-data.org${req.url}`;
   req.pipe(request(url, {
     headers: {
