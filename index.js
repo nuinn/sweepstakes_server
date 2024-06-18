@@ -8,23 +8,23 @@ const server = express();
 const { PORT, API_TOKEN } = process.env;
 // const PORT = 3000;
 
-// server.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-//   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Auth-Token');
-//   if (req.method === 'OPTIONS') {
-//     res.sendStatus(204);
-//   } else {
-//     next();
-//   }
-// });
+server.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Auth-Token');
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(204);
+  } else {
+    next();
+  }
+});
 
 server.use(express.json());
-// server.use(cors({ origin: true }));
-server.use(cors({
-  origin: 'https://eurosweeps.vercel.app', // Allow your Vercel frontend
-  credentials: true,
-}));
+server.use(cors({ origin: true }));
+// server.use(cors({
+//   origin: 'https://eurosweeps.vercel.app', // Allow your Vercel frontend
+//   credentials: true,
+// }));
 server.use(apiRouter);
 
 server.use('/api', (req, res) => {
