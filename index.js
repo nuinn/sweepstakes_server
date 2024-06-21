@@ -20,24 +20,41 @@ server.use((req, res, next) => {
 });
 
 server.use(express.json());
-server.use(cors({ origin: true }));
+// server.use(cors({ origin: true }));
 // server.use(cors({
 //   origin: 'https://eurosweeps.vercel.app', // Allow your Vercel frontend
 //   credentials: true,
 // }));
 server.use(apiRouter);
 
-server.use('/api', (req, res) => {
-  console.log('rerouting, req.url', req.url);
+server.use('/api', async (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
   const url = `https://api.football-data.org${req.url}`;
-  console.log('url', url);
-  req.pipe(request(url, {
+  const response = await fetch(url, {
     headers: {
       'X-Auth-Token': API_TOKEN,
     },
-  })).pipe(res);
+  });
+  const data = await response.json();
+  res.json(data);
 });
 
+// server.use('/api', (req, res) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   console.log('rerouting, req.url', req.url);
+//   const url = `https://api.football-data.org${req.url}`;
+//   console.log('url', url);
+//   req.pipe(request(url, {
+//     headers: {
+//       'X-Auth-Token': API_TOKEN,
+//     },
+//   })).pipe(res.header);
+// });
+
 server.listen(PORT, () => {
+<<<<<<< HEAD
   console.log(`Proxy server is running on http://localhost:${PORT}`);
+=======
+  console.log(`Proxy server is running on port: ${PORT}`);
+>>>>>>> 2c13422ff18c4f4681459ce167d64b427e6ab549
 });
