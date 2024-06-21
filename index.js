@@ -1,16 +1,14 @@
 import express from 'express';
 import cors from 'cors';
-import request from 'request';
 import './dB.js';
 import apiRouter from './src/api/router.js';
 
 const server = express();
 const { PORT, API_TOKEN } = process.env;
-// const PORT = 3000;
 
 server.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Auth-Token');
   if (req.method === 'OPTIONS') {
     res.sendStatus(204);
@@ -20,11 +18,7 @@ server.use((req, res, next) => {
 });
 
 server.use(express.json());
-// server.use(cors({ origin: true }));
-// server.use(cors({
-//   origin: 'https://eurosweeps.vercel.app', // Allow your Vercel frontend
-//   credentials: true,
-// }));
+server.use(cors({ origin: true }));
 server.use(apiRouter);
 
 server.use('/api', async (req, res) => {
