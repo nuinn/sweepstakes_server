@@ -24,9 +24,48 @@ async function populateTeams({ teams, wildcard }) {
   return teamsData;
 }
 
+async function update({ parsedUnregisteredMatches }) {
+  function interpretResult({ result, isHome }) {
+    if (result === 'DRAW') {
+      return 'drawn';
+    }
+    if (result === 'HOME_TEAM') {
+      if (isHome) {
+        return 'won';
+      }
+      return 'lost';
+    }
+    if (isHome) {
+      return 'lost';
+    }
+    return 'won';
+  }
+  const unregisteredResults = [];
+  for (let i = 0; i < parsedUnregisteredMatches.length; i++) {
+    const result = parsedUnregisteredMatches[i];
+    unregisteredResults.push({
+      id: result.home,
+      result: interpretResult({ result: result.winner, isHome: true }),
+      stage: result.stage === 'GROUP_STAGE' ? 'group' : 'KO',
+      GF: result.score.home,
+      GA: result.score.away,
+    });
+    unregisteredResults.push({
+      id: result.away,
+      result: interpretResult({ result: result.winner, isHome: false }),
+      stage: result.stage === 'GROUP_STAGE' ? 'group' : 'KO',
+      GF: result.score.away,
+      GA: result.score.home,
+    });
+  }
+  const updatedTeams = teamsRepository.update({ unregisteredResults });
+  return updatedTeams;
+}
+
 export {
   getAll,
   add,
   edit,
   populateTeams,
+  update,
 };

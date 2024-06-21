@@ -30,8 +30,9 @@ async function edit(req, res) {
 
 async function update(req, res) {
   const { _id } = req.params;
-  const { body } = req;
-  console.log('_id', _id, 'body', body);
+  const { unregisteredMatches } = req.body;
+  const updatedLeague = leaguesService.update({ _id, unregisteredMatches });
+  res.json(updatedLeague);
 }
 
 export {

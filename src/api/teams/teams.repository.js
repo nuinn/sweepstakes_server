@@ -28,9 +28,35 @@ async function populateTeams({ teams, wildcard }) {
   return teamsData;
 }
 
+async function update({ unregisteredResults }) {
+  const updateResultsBulk = [];
+  for (let i = 0; i < unregisteredResults.length; i++) {
+    const unregisteredResult = unregisteredResults[i];
+    const result = `${unregisteredResult.stage}.${unregisteredResult.result}`;
+    const GF = `${unregisteredResult.stage}.GF`;
+    const GA = `${unregisteredResult.stage}.GA`;
+    updateResultsBulk.push({
+      updateOne: {
+        filter: { apiId: unregisteredResult.id },
+        update: {
+          $inc: {
+            played: 1,
+            [result]: 1,
+            [GF]: unregisteredResult.GF,
+            [GA]: unregisteredResult.GA,
+          },
+        },
+      },
+    });
+  }
+  const updatedTeams = await TeamModel.bulkWrite(updateResultsBulk);
+  return updatedTeams;
+}
+
 export {
   getAll,
   add,
   edit,
   populateTeams,
+  update,
 };

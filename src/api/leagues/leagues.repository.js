@@ -17,8 +17,24 @@ async function edit({ _id, body }) {
   return editedLeague;
 }
 
+async function update({ _id, unregisteredMatches }) {
+  const bulkUpdate = unregisteredMatches.map((unregisteredMatch) => ({
+    updateOne: {
+      filter: { _id },
+      update: {
+        $push: {
+          matches: unregisteredMatch.id,
+        },
+      },
+    },
+  }));
+  const updatedLeague = await LeagueModel.bulkWrite(bulkUpdate);
+  return updatedLeague;
+}
+
 export {
   getByName,
   create,
   edit,
+  update,
 };
