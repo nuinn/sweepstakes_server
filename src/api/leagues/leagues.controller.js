@@ -28,8 +28,15 @@ async function edit(req, res) {
   res.json(editedLeague);
 }
 
+async function update(req, res) {
+  const { _id } = req.params;
+  const { body } = req;
+  console.log('_id', _id, 'body', body);
+}
+
 export {
   getByName,
   create,
   edit,
+  update,
 };

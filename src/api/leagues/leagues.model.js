@@ -13,7 +13,7 @@ const leaguesSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  games: {
+  matches: {
     type: [Number],
   },
 });
