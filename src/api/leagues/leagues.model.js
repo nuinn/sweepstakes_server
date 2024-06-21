@@ -13,6 +13,9 @@ const leaguesSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  games: {
+    type: [Number],
+  },
 });
 
 const LeagueModel = model('League', leaguesSchema);

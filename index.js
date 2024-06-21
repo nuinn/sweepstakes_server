@@ -40,5 +40,4 @@ server.use('/api', (req, res) => {
 
 server.listen(PORT, () => {
   console.log(`Proxy server is running on http://localhost:${PORT}`);
-  console.log(`PORT: ${PORT}, API_TOKEN: ${API_TOKEN}`);
 });
