@@ -42,6 +42,10 @@ const teamsSchema = new Schema({
       type: Number,
       default: 0,
     },
+    PK: {
+      type: Number,
+      default: 0,
+    },
     drawn: {
       type: Number,
       default: 0,

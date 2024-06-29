@@ -43,20 +43,42 @@ async function update({ parsedUnregisteredMatches }) {
   const unregisteredResults = [];
   for (let i = 0; i < parsedUnregisteredMatches.length; i++) {
     const result = parsedUnregisteredMatches[i];
-    unregisteredResults.push({
-      id: result.home,
-      result: interpretResult({ result: result.winner, isHome: true }),
-      stage: result.stage === 'GROUP_STAGE' ? 'group' : 'KO',
-      GF: result.score.home,
-      GA: result.score.away,
-    });
-    unregisteredResults.push({
-      id: result.away,
-      result: interpretResult({ result: result.winner, isHome: false }),
-      stage: result.stage === 'GROUP_STAGE' ? 'group' : 'KO',
-      GF: result.score.away,
-      GA: result.score.home,
-    });
+    if (result.penalties) {
+      const goalsScored = result.score.home - result.penalties.home;
+      unregisteredResults.push({
+        id: result.home,
+        result: 'drawn',
+        stage: 'KO',
+        GF: goalsScored,
+        GA: goalsScored,
+        PK: result.winner === 'HOME_TEAM' ? 1 : 0,
+      });
+      unregisteredResults.push({
+        id: result.away,
+        result: 'drawn',
+        stage: 'KO',
+        GF: goalsScored,
+        GA: goalsScored,
+        PK: result.winner === 'AWAY_TEAM' ? 1 : 0,
+      });
+    } else {
+      unregisteredResults.push({
+        id: result.home,
+        result: interpretResult({ result: result.winner, isHome: true }),
+        stage: result.stage === 'GROUP_STAGE' ? 'group' : 'KO',
+        GF: result.score.home,
+        GA: result.score.away,
+        PK: 0,
+      });
+      unregisteredResults.push({
+        id: result.away,
+        result: interpretResult({ result: result.winner, isHome: false }),
+        stage: result.stage === 'GROUP_STAGE' ? 'group' : 'KO',
+        GF: result.score.away,
+        GA: result.score.home,
+        PK: 0,
+      });
+    }
   }
   const updatedTeams = teamsRepository.update({ unregisteredResults });
   return updatedTeams;

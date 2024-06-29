@@ -44,6 +44,7 @@ async function update({ unregisteredResults }) {
             [result]: 1,
             [GF]: unregisteredResult.GF,
             [GA]: unregisteredResult.GA,
+            'KO.PK': unregisteredResult.PK,
           },
         },
       },

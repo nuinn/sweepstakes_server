@@ -27,6 +27,7 @@ async function update({ _id, unregisteredMatches }) {
       away: unregisteredMatch.awayTeam.id,
       winner: unregisteredMatch.score.winner,
       score: unregisteredMatch.score.fullTime,
+      penalties: unregisteredMatch.score.penalties || false,
     });
   }
   const response = teamsService.update({ parsedUnregisteredMatches });
