@@ -28,6 +28,14 @@ async function populateTeams({ teams, wildcard }) {
   return teamsData;
 }
 
+function isLive({ unregisteredResult }) {
+  const { stage, result, PK } = unregisteredResult;
+  if (stage === 'KO' && result !== 'won' && !PK) {
+    return false;
+  }
+  return true;
+}
+
 async function update({ unregisteredResults }) {
   const updateResultsBulk = [];
   for (let i = 0; i < unregisteredResults.length; i++) {
@@ -39,6 +47,7 @@ async function update({ unregisteredResults }) {
       updateOne: {
         filter: { apiId: unregisteredResult.id },
         update: {
+          $set: { live: isLive({ unregisteredResult }) },
           $inc: {
             played: 1,
             [result]: 1,
