@@ -47,7 +47,7 @@ async function update({ unregisteredResults }) {
       updateOne: {
         filter: { apiId: unregisteredResult.id },
         update: {
-          $set: { live: isLive({ unregisteredResult }) },
+          $set: { active: isLive({ unregisteredResult }) },
           $inc: {
             played: 1,
             [result]: 1,
