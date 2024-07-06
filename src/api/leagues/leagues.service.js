@@ -30,7 +30,8 @@ async function update({ _id, unregisteredMatches }) {
       penalties: unregisteredMatch.score.penalties || false,
     });
   }
-  const response = teamsService.update({ parsedUnregisteredMatches });
+  const response = await teamsService.update({ parsedUnregisteredMatches });
+  console.log('this is it now', response);
   if (response) {
     const updatedLeague = leaguesRepository.update({
       _id, unregisteredMatches: parsedUnregisteredMatches,
