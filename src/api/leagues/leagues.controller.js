@@ -14,8 +14,8 @@ async function getByName(req, res) {
 }
 
 async function create(req, res) {
-  const { body } = req;
-  const addedLeague = await leaguesService.create({ newLeague: body });
+  const { leagueName } = req.body;
+  const addedLeague = await leaguesService.create({ leagueName });
   res.json(addedLeague);
 }
 

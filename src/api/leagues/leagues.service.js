@@ -2,12 +2,15 @@ import * as leaguesRepository from './leagues.repository.js';
 import * as teamsService from '../teams/teams.service.js';
 
 async function getByName({ name }) {
-  const league = await leaguesRepository.getByName({ name });
+  let league = await leaguesRepository.getByName({ name });
+  if (!league) {
+    league = await leaguesRepository.create({ leagueName: name });
+  }
   return league;
 }
 
-async function create({ newLeague }) {
-  const addedLeague = await leaguesRepository.create({ newLeague });
+async function create({ leagueName }) {
+  const addedLeague = await leaguesRepository.create({ leagueName });
   return addedLeague;
 }
 

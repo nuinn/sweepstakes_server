@@ -5,8 +5,8 @@ async function getByName({ name }) {
   return league;
 }
 
-async function create({ newLeague }) {
-  const addedLeague = await LeagueModel.create(newLeague);
+async function create({ leagueName }) {
+  const addedLeague = await LeagueModel.create({ name: leagueName });
   return addedLeague;
 }
 
